@@ -19,7 +19,11 @@ export function loadState(seed) {
       localStorage.setItem(KEY, JSON.stringify(initial));
       return initial;
     }
-    return hydrate(JSON.parse(raw));
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.members) || !Array.isArray(parsed.expenses)) {
+      return hydrate(seed);
+    }
+    return hydrate(parsed);
   } catch {
     return hydrate(seed);
   }
@@ -34,7 +38,7 @@ export function nextExpenseId() {
 }
 
 export function nextMemberId(members) {
-  const max = members.reduce((m, x) => (x.id > m ? x.id : m), 0);
+  const max = members.reduce((m, x) => (Number(x.id) > m ? Number(x.id) : m), 0);
   return max + 1;
 }
 

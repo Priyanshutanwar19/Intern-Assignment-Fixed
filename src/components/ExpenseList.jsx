@@ -3,12 +3,14 @@ import { formatMoney } from "../lib/money.js";
 import { dateValue, formatDate } from "../lib/format.js";
 
 function initials(name) {
-  return name
-    .split(" ")
+  return (name || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
     .map((p) => p[0])
     .join("")
     .slice(0, 2)
-    .toUpperCase();
+    .toUpperCase() || "?";
 }
 
 function ExpenseRow({ expense, memberMap, onDelete, onSaveAmount }) {
