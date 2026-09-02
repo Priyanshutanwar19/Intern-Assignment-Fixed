@@ -22,23 +22,23 @@ export function suggestSettlements(balances, members) {
     const d = debtors[i];
     const c = creditors[j];
 
-    if (d.amount > c.amount) {
+    if (d.amount > c.amount + 0.001) {
       transfers.push({
         from: d.id,
         to: c.id,
         fromName: nameOf(d.id),
         toName: nameOf(c.id),
-        amount: c.amount,
+        amount: Number(c.amount.toFixed(2)),
       });
       d.amount -= c.amount;
       j += 1;
-    } else if (d.amount < c.amount) {
+    } else if (d.amount < c.amount - 0.001) {
       transfers.push({
         from: d.id,
         to: c.id,
         fromName: nameOf(d.id),
         toName: nameOf(c.id),
-        amount: d.amount,
+        amount: Number(d.amount.toFixed(2)),
       });
       c.amount -= d.amount;
       i += 1;
@@ -48,7 +48,7 @@ export function suggestSettlements(balances, members) {
         to: c.id,
         fromName: nameOf(d.id),
         toName: nameOf(c.id),
-        amount: d.amount,
+        amount: Number(d.amount.toFixed(2)),
       });
       i += 1;
       j += 1;

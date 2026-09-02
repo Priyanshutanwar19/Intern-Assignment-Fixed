@@ -40,8 +40,12 @@ function ExpenseRow({ expense, memberMap, onDelete, onSaveAmount }) {
             onChange={(e) => setDraft(e.target.value)}
             onBlur={() => {
               const n = Number(draft);
-              if (Number.isFinite(n) && n > 0 && n !== Number(expense.amount)) {
-                onSaveAmount(n);
+              if (Number.isFinite(n) && n > 0) {
+                if (n !== Number(expense.amount)) {
+                  onSaveAmount(n);
+                }
+              } else {
+                setDraft(String(expense.amount));
               }
             }}
             aria-label={`Edit amount for ${expense.description}`}

@@ -1,8 +1,10 @@
 export function formatMoney(amount) {
   const n = Number(amount);
   if (!Number.isFinite(n)) return "$0.00";
+  const fixed = Math.abs(n).toFixed(2);
+  if (fixed === "0.00") return "$0.00";
   const sign = n < 0 ? "-" : "";
-  return `${sign}$${Math.abs(n).toFixed(2)}`;
+  return `${sign}$${fixed}`;
 }
 
 export function splitEqual(amount, ids) {
