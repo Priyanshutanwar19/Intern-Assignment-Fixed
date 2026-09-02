@@ -57,13 +57,16 @@ export default function AddExpenseForm({ members, onAdd }) {
     onAdd({
       description: description.trim(),
       amount: n,
-      paidBy: Number(paidBy),
+      paidBy: Number(paidBy || members[0]?.id),
       splitType,
       splitWith: splitWith.map(Number),
       percents: splitType === "percent" ? percents : undefined,
-      date: new Date(date),
+      date,
       category,
     });
+
+    setDescription("");
+    setAmount("");
   }
 
   return (
